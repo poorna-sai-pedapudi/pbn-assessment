@@ -1,34 +1,247 @@
-.container {
-  max-width: 720px;
-  margin: 40px auto;
-  font-family: Arial, sans-serif;
+/* ── Reset & base ─────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  /* Dark charcoal with a subtle dot-grid — industrial / workshop feel */
+  background-color: #1a1d23;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Top navigation bar ───────────────────────────── */
+.nav {
+  background: #111318;
+  border-bottom: 1px solid #2a2d38;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  padding: 14px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 7px 22px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav button:hover {
+  background: #1e2129;
+  color: #e5e7eb;
+}
+
+.nav button.active {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+}
+
+/* ── Page layout — center card on the dark background  */
+.page-center {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px 64px;
+}
+
+/* ── Card container ───────────────────────────────── */
+.container {
+  background: #ffffff;
+  border-radius: 10px;
+  border-top: 3px solid #dc2626;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  max-width: 700px;
+  padding: 36px 40px;
+  width: 100%;
+}
+
+.container h1 {
+  color: #111;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.container h2 {
+  color: #333;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 28px 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Form row ─────────────────────────────────────── */
 .form {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-input {
-  padding: 10px;
-  border: 1px solid #ccc;
+/* ── Inputs & selects ─────────────────────────────── */
+input,
+select {
+  background: #f8f9fb;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
+  color: #1a1a1a;
+  flex: 1 1 160px;
+  font-size: 14px;
+  min-width: 0;
+  padding: 9px 12px;
 }
 
-button {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 6px;
+input:focus,
+select:focus {
+  border-color: #dc2626;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+}
+
+input[type="date"] {
+  background: #e8edf5;
+  flex: 0 1 160px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(30%) sepia(80%) saturate(500%) hue-rotate(330deg);
   cursor: pointer;
 }
 
+
+/* Full-width name input */
+input[placeholder="Your name"] {
+  display: block;
+  flex: none;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* ── Buttons (default) ────────────────────────────── */
+button {
+  background: #e9eaed;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #333;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: #dde0e6;
+}
+
+/* ── Slot buttons ─────────────────────────────────── */
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.slot {
+  background: #dc2626;
+  border: 1px solid #b91c1c;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 7px 14px;
+}
+
+.slot:hover {
+  background: #b91c1c;
+}
+
+.slot.selected {
+  background: #7f1d1d;
+  border-color: #7f1d1d;
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
+
+/* ── Appointment cards ────────────────────────────── */
 .item-card {
+  align-items: center;
+  background: #fafbfc;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border: 1px solid #ddd;
-  padding: 12px;
+  gap: 12px;
   margin-bottom: 10px;
+  padding: 14px 16px;
+  border-left: 3px solid #dc2626;
+}
+
+.item-card p {
+  color: #555;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* Cancel appointment button */
+.item-card button {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  color: #c0392b;
+  flex-shrink: 0;
+  font-size: 13px;
+  padding: 6px 14px;
+}
+
+.item-card button:hover {
+  background: #fff0ee;
+  border-color: #c0392b;
+}
+
+/* ── Confirm box ──────────────────────────────────── */
+.confirm-box {
+  background: #fff5f5;
+  border: 1px solid #fecaca;
   border-radius: 8px;
+  margin-top: 20px;
+  padding: 18px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.confirm-actions .cancel-btn {
+  background: #e9eaed;
+  color: #333;
+}
+
+/* ── Message / feedback ───────────────────────────── */
+.message {
+  background: #f0fdf4;
+  border-left: 3px solid #22c55e;
+  border-radius: 0 6px 6px 0;
+  color: #166534;
+  font-size: 14px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
 }

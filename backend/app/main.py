@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-from app.database import Base, engine
-from app import models
-from app.routers import items
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers import services, mechanics, working_hours, appointments, stats
 
-app = FastAPI(title = "PBN Assessment")
+app = FastAPI(title="PBN Assessment")
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,12 +13,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(items.router)
+app.include_router(services.router)
+app.include_router(mechanics.router)
+app.include_router(working_hours.router)
+app.include_router(appointments.router)
+app.include_router(stats.router)
+
 
 @app.get("/")
 def root():
-    return {"message": "PBN Assesssment Running"}
-
+    return {"message": "PBN Assessment Running"}
 
 @app.get("/health")
 def health_check():
