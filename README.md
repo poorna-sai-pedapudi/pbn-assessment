@@ -119,3 +119,16 @@ Response:
   "status": "healthy"
 }
 ```
+
+
+## Deployment Strategy
+
+For production, the backend can be deployed as a Dockerized FastAPI service on Render, Railway, or AWS ECS. The React frontend can be built as static assets and deployed through Vercel, Netlify, or CloudFront. PostgreSQL should run as a managed database.
+
+Alembic migrations should run during the release process before the application starts. The `/health` endpoint can be used by a load balancer or hosting platform to verify backend readiness.
+
+Production additions would include TLS, secrets management, automated backups, monitoring, audit logging, and environment-specific configuration.
+
+## Tradeoffs / Future Improvements
+
+To be updated based on the actual assessment requirements.
