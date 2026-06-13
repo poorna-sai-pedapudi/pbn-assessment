@@ -4,6 +4,11 @@ __pycache__/
 backend/venv/
 backend/.env
 backend/test.db
+backend/.pytest_cache/
+backend/app/__pycache__/
+backend/app/routers/__pycache__/
+backend/tests/__pycache__/
+frontend/.env
 
 # Node
 frontend/node_modules/
