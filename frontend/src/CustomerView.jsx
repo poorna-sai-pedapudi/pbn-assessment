@@ -17,6 +17,7 @@ function CustomerView() {
   const [slots, setSlots] = useState([]);
   const [customerName, setCustomerName] = useState("");
   const [message, setMessage] = useState("");
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     getServices().then(setServices);
@@ -32,6 +33,40 @@ function CustomerView() {
       setSlots([]);
     }
   }, [serviceId, mechanicId, date]);
+
+  async function findNextAvailable() {
+    if (!serviceId || !mechanicId) {
+      setMessage("Please select a service and mechanic first.");
+      return;
+    }
+
+    setSearching(true);
+    setMessage("");
+    setDate("");
+    setSlots([]);
+
+    const today = new Date();
+
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+        const available = await getAvailability(mechanicId, serviceId, dateStr);
+        if (available.length > 0) {
+          setDate(dateStr);
+          setSearching(false);
+          return;
+        }
+      } catch {
+        // skip this day
+      }
+    }
+
+    setMessage("No available slots found in the next 30 days.");
+    setSearching(false);
+  }
 
   async function handleBook(slot) {
     if (!customerName) {
@@ -99,6 +134,14 @@ function CustomerView() {
 
         <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
+
+      <button
+        onClick={findNextAvailable}
+        disabled={!serviceId || !mechanicId || searching}
+        style={{ marginBottom: "16px" }}
+      >
+        {searching ? "Searching..." : "Find Next Available Date"}
+      </button>
 
       <input
         placeholder="Your name"
